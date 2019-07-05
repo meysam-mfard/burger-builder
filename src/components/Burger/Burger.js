@@ -4,19 +4,19 @@ import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 import classes from './Burger.module.css';
 
 const burger = (props) => {
-    let ingredientsArr = [];
-
-    ingredientsArr.push(<BurgerIngredient type="bunTop" />);
-    ingredientsArr.push(<BurgerIngredient type="cheese" />);
-    ingredientsArr.push(<BurgerIngredient type="meat" />);
-    ingredientsArr.push(<BurgerIngredient type="bunBottom" />);
-
-    let ingredients = ingredientsArr.map(ing => ing);
+    
+    const ingredients = Object.keys(props.ingredients).map( ingredientKey => {
+        return [...Array(props.ingredients[ingredientKey])].map( (_, index) => {
+            return <BurgerIngredient key={ingredientKey+index} type={ingredientKey} />;
+        });
+    });
     
     return (
-      <div className={classes.Burger}>
-          {ingredients}
-      </div>  
+        <div className={classes.Burger}>
+            <BurgerIngredient type='bunTop' />
+            {ingredients}
+            <BurgerIngredient type='bunBottom' />
+        </div>
     );
 };
 
