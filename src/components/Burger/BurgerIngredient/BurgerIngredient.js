@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import classes from './BurgerIngredient.module.css';
 
 const burgerIngredient = props => {
+    
     let ingredient = null;
 
     switch (props.type) {
@@ -37,7 +38,7 @@ const burgerIngredient = props => {
     return ingredient;
 };
 
-burgerIngredient.prototype = {
+burgerIngredient.propTypes = {
     type: PropTypes.string.isRequired
 };
 
