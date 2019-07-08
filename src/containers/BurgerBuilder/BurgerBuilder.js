@@ -8,7 +8,7 @@ const INGREDIENT_PRICES = {
   bacon: 0.6,
   cheese: 0.4,
   meat: 1.2
-}
+};
 
 class BurgerBuilder extends Component {
   state = {
@@ -18,40 +18,52 @@ class BurgerBuilder extends Component {
       cheese: 0,
       meat: 0
     },
-    totalPrice: 5
+    totalPrice: 5,
+    purchasable: false
   };
 
-  moreIntgredientHandler = type => {
+  moreIngredientHandler = type => {
     const updatedIngredients = {...this.state.ingredients};
     updatedIngredients[type] = this.state.ingredients[type]+1;
     const newPrice = this.state.totalPrice + INGREDIENT_PRICES[type];
     this.setState({ingredients: updatedIngredients, totalPrice: newPrice});
+    this.updatePurchasable(updatedIngredients);
   };
 
-  lessIntgredientHandler = type => {
+  lessIngredientHandler = type => {
     const updatedIngredients = {...this.state.ingredients};
     if(updatedIngredients[type] <= 0)
       return;
     updatedIngredients[type] = this.state.ingredients[type]-1;
     const newPrice = this.state.totalPrice - INGREDIENT_PRICES[type];
     this.setState({ingredients: updatedIngredients, totalPrice: newPrice});
+    this.updatePurchasable(updatedIngredients);
+  };
+
+  updatePurchasable = (ingredients) => {//ingredients is passed as arg to be able to get the latest state
+    const totalIngrtCount = Object.values(ingredients)
+      .reduce((count, currIngrCount) =>
+        count + currIngrCount, 0);
+    this.setState({purchasable: totalIngrtCount});
   };
 
   render() {
-    const buttonDisacbledInfo = {
+    const buttonDisabledInfo = {
       ...this.state.ingredients
     };
-    for (let key in buttonDisacbledInfo) {
-      buttonDisacbledInfo[key] = buttonDisacbledInfo[key] <= 0;
+    for (let key in buttonDisabledInfo) {
+      buttonDisabledInfo[key] = buttonDisabledInfo[key] <= 0;
     }
 
     return (
       <>
         <Burger ingredients={this.state.ingredients} />
-        <BuildControls 
-          moreIntgredient={this.moreIntgredientHandler}
-          lessIntgredient={this.lessIntgredientHandler}
-          disabled={buttonDisacbledInfo} />
+        <BuildControls
+          moreIngredient={this.moreIngredientHandler}
+          lessIngredient={this.lessIngredientHandler}
+          price={this.state.totalPrice}
+          disabled={buttonDisabledInfo}
+          purchasable={this.state.purchasable}/>
       </>
     );
   }
