@@ -2,7 +2,7 @@
     width: 100%;
     height: 56px;
     position: fixed;
-    background-color: #36e29d;
+    background-color: #5885c9;
     box-sizing: border-box;
     top: 0;
     left: 0;
@@ -15,4 +15,14 @@
 
 .Toolbar nav {
     height: 100%;
+}
+
+.Logo {
+    height: 80%;
+}
+
+@media (max-width: 499px) {
+    .DesktopOnly {
+        display: none;
+    }
 }
