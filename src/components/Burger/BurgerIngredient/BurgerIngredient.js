@@ -30,7 +30,7 @@ const burgerIngredient = props => {
             break;
         case 'cheese':
             ingredient = <div className={classes.Cheese}></div>
-            break
+            break;
         default:
             ingredient = null;
     }

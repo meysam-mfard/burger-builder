@@ -26,11 +26,27 @@ class BurgerBuilder extends Component {
     };
 
     componentDidMount() {
+        //this is used to enforce a specific order for ingredients in UI
+        const ingredientsObject = {
+            salad: 0,
+            bacon: 0,
+            cheese: 0,
+            meat: 0
+        };
+
+        let tempIngredients = null;
         axios.request('https://burger-builder-react-9f1de.firebaseio.com/ingredients.json')
             .then(response =>
-                this.setState({ingredients: response.data}))
+                //this.setState({ingredients: response.data}))
+                tempIngredients= response.data)
             .catch(error =>
                 this.setState({error: true}));
+
+        //this is used to enforce a specific order for ingredients in UI
+        for (let ingrt in ingredientsObject.keys) {
+            ingredientsObject[ingrt] = tempIngredients[ingrt];
+        }
+        this.setState({ingredients: ingredientsObject});
     }
 
     moreIngredientHandler = type => {
@@ -67,7 +83,7 @@ class BurgerBuilder extends Component {
     };
 
     purchaseContinueHandler = () => {
-        this.setState({loading: true});
+        /*this.setState({loading: true});
         const order = {
             ingredients: this.state.ingredients,
             price: this.state.totalPrice,
@@ -89,7 +105,17 @@ class BurgerBuilder extends Component {
             })
             .catch(error => {
                 this.setState({loading: false, purchasing: false});
-            });
+            });*/
+
+        const queryParams = [];
+        for (let ingrt in this.state.ingredients) {
+            queryParams.push(encodeURIComponent(ingrt) + '=' + encodeURIComponent(this.state.ingredients[ingrt]));
+        }
+
+        this.props.history.push({
+            pathname: '/checkout',
+            search: '?'+queryParams.join('&')
+        });
     };
 
     render() {
