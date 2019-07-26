@@ -39,7 +39,7 @@
     .NavigationItem a:active,
     .NavigationItem a.active {
         background-color: #e27b36;
-        border-bottom: 4px solid #e25036;
+        border-bottom: 4px solid limegreen;
         color: white;
     }
 }
