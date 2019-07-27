@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
+import {Route} from "react-router-dom";
 
 import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSummary";
+import ContactData from "./ContactData/ContactData";
 
 class Checkout extends Component {
     state = {
@@ -8,7 +10,7 @@ class Checkout extends Component {
             salad: 0,
             bacon: 0,
             cheese: 0,
-            meat:0
+            meat: 0
         }
     };
 
@@ -26,7 +28,7 @@ class Checkout extends Component {
     };
 
     continueClickHandler = () => {
-        this.props.history.replace('/ckeckout/contact-data');
+        this.props.history.replace(this.props.match.path + '/contact-data');
     };
 
     render() {
@@ -35,6 +37,9 @@ class Checkout extends Component {
                 <CheckoutSummary ingredients={this.state.ingredients}
                                  cancelClicked={this.cancelClickHandler}
                                  continueClicked={this.continueClickHandler}/>
+                <Route
+                    path={this.props.match.path + "/contact-data"}
+                    component={ContactData}/>
             </div>
         );
     }
