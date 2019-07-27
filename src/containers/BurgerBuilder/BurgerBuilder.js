@@ -38,7 +38,7 @@ class BurgerBuilder extends Component {
         axios.request('https://burger-builder-react-9f1de.firebaseio.com/ingredients.json')
             .then(response =>
                 //this.setState({ingredients: response.data}))
-                tempIngredients= response.data)
+                tempIngredients = response.data)
             .catch(error =>
                 this.setState({error: true}));
 
@@ -83,38 +83,15 @@ class BurgerBuilder extends Component {
     };
 
     purchaseContinueHandler = () => {
-        /*this.setState({loading: true});
-        const order = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice,
-            deliveryMethod: 'fastest',
-            customer: {
-                name: 'customer1',
-                address: {
-                    street: 'dummy street',
-                    zipCode: '123456',
-                    city: 'Stockholm'
-                },
-                email: 'customer1@email.com'
-            }
-        };
-
-        axios.post('orders.json', order)
-            .then(response => {
-                this.setState({loading: false, purchasing: false});
-            })
-            .catch(error => {
-                this.setState({loading: false, purchasing: false});
-            });*/
-
         const queryParams = [];
         for (let ingrt in this.state.ingredients) {
             queryParams.push(encodeURIComponent(ingrt) + '=' + encodeURIComponent(this.state.ingredients[ingrt]));
         }
+        queryParams.push('price' + '=' + this.state.totalPrice.toFixed(2));
 
         this.props.history.push({
             pathname: '/checkout',
-            search: '?'+queryParams.join('&')
+            search: '?' + queryParams.join('&')
         });
     };
 
@@ -143,9 +120,9 @@ class BurgerBuilder extends Component {
                         order={this.purchasingHandler}/>)
                 </>);
             orderSummary = <OrderSummary purchaseCancelled={this.purchaseCancelHandler}
-                          purchaseContinued={this.purchaseContinueHandler}
-                          ingredients={this.state.ingredients}
-                          price={this.state.totalPrice.toFixed(2)}/>;
+                                         purchaseContinued={this.purchaseContinueHandler}
+                                         ingredients={this.state.ingredients}
+                                         price={this.state.totalPrice.toFixed(2)}/>;
         }
 
         if (this.state.loading) {

@@ -5,22 +5,20 @@ import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSumm
 import ContactData from "./ContactData/ContactData";
 
 class Checkout extends Component {
-    state = {
-        ingredients: {
-            salad: 0,
-            bacon: 0,
-            cheese: 0,
-            meat: 0
-        }
-    };
 
-    componentDidMount() {
+    constructor(props) {
+        super(props);
         const queryParams = new URLSearchParams(this.props.location.search);
         const ingredientsObject = {};
+        let price = 0;
         for (let param of queryParams) {
-            ingredientsObject[param[0]] = +param[1];
+            if (param[0] === 'price') {
+                price = +param[1];
+            } else {
+                ingredientsObject[param[0]] = +param[1];
+            }
         }
-        this.setState({ingredients: ingredientsObject});
+        this.state = {ingredients: ingredientsObject, totalPrice: price};
     }
 
     cancelClickHandler = () => {
@@ -39,7 +37,12 @@ class Checkout extends Component {
                                  continueClicked={this.continueClickHandler}/>
                 <Route
                     path={this.props.match.path + "/contact-data"}
-                    component={ContactData}/>
+                    render={(props) => (//props is passed to have access to axios history object in ContactData
+                        <ContactData
+                            ingredients={this.state.ingredients}
+                            price={this.state.totalPrice}
+                            {...props}/>
+                    )}/>
             </div>
         );
     }
