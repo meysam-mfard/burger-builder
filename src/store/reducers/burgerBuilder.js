@@ -8,13 +8,17 @@ const INGREDIENT_PRICES = {
 };
 
 const initialState = {
-    ingredients: {
-        salad: 0,
-        bacon: 0,
-        cheese: 0,
-        meat: 0
-    },
-    price: 5
+    ingredients: null,
+    price: 5,
+    error: false
+};
+
+const calculatePrice = (ingredients) => {
+    let price = initialState.price;
+    for (let ingKey in INGREDIENT_PRICES) {
+        price += ingredients[ingKey] * INGREDIENT_PRICES[ingKey];
+    }
+    return price;
 };
 
 const burgerBuilder = (state = initialState, action) => {
@@ -39,6 +43,18 @@ const burgerBuilder = (state = initialState, action) => {
                     [action.ingredientName]: state.ingredients[action.ingredientName] - 1
                 },
                 price: state.price - INGREDIENT_PRICES[action.ingredientName]
+            };
+        case actionType.SET_INGREDIENTS:
+            return {
+                ...state,
+                ingredients: action.ingredients,
+                price: calculatePrice(action.ingredients),
+                error: false
+            };
+        case actionType.FETCH_INGREDIENT_FAILED:
+            return {
+                ...state,
+                error: true
             };
         default:
             return state;
