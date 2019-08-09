@@ -2,7 +2,8 @@ import * as actionType from '../actions/actionTypes';
 
 const initialState = {
     order: [],
-    loading: false
+    loading: false,
+    purchasing: true
 };
 
 const order = (state = initialState, action) => {
@@ -15,17 +16,24 @@ const order = (state = initialState, action) => {
             return {
                 ...state,
                 order: state.order.concat(newOrder),
-                loading: false
+                loading: false,
+                purchasing: false
             };
         case actionType.PURCHASE_BURGER_FAIL:
             return {
                 ...state,
-                loading: false
+                loading: false,
+                purchasing: false
             };
         case actionType.PURCHASE_BURGER_START:
             return {
                 ...state,
                 loading: true
+            };
+        case actionType.PURCHASE_BURGER_INIT:
+            return {
+                ...state,
+                purchasing: true
             };
         default:
             return state;
