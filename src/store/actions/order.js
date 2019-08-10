@@ -40,3 +40,43 @@ export const initPurchase = () => {
         type: actionTypes.PURCHASE_BURGER_INIT
     }
 };
+
+export const fetchOrdersStart = (orders) => {
+    return {
+        type: actionTypes.FETCH_ORDERS_START
+    }
+};
+
+export const fetchOrdersSuccess = (fetchedOrders) => {
+    return {
+        type: actionTypes.FETCH_ORDERS_SUCCESS,
+        orders: fetchedOrders
+    }
+};
+
+export const fetchOrdersFail = (error) => {
+    return {
+        type: actionTypes.FETCH_ORDERS_FAIL,
+        error: error
+    }
+};
+
+export const fetchOrders = () => {
+    return dispatch => {
+        dispatch(fetchOrdersStart());
+        axios.get('orders.json')
+            .then(response => {
+                let fetchedOrders = [];
+                for (let dataKey in response.data) {
+                    fetchedOrders.push({
+                        ...response.data[dataKey],
+                        id: dataKey
+                    });
+                }
+                dispatch(fetchOrdersSuccess(fetchedOrders));
+            })
+            .catch(error => {
+                dispatch(fetchOrdersFail(error));
+            })
+    }
+};
