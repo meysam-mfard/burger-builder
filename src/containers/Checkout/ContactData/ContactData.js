@@ -80,7 +80,7 @@ class ContactData extends Component {
                 value: '',
                 validation: {
                     isRequired: true,
-                    patternRegExp: RegExp(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
+                    isEmail: true
                 },
                 valid: false,
                 touched: false
@@ -117,8 +117,9 @@ class ContactData extends Component {
             isValid = value.length <= rules.maxLength && isValid;
         }
 
-        if (rules.patternRegExp) {
-            isValid = rules.patternRegExp.test(value) && isValid;
+        if (rules.isEmail) {
+            const pattern = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+            isValid = pattern.test(value) && isValid
         }
 
         return isValid;
