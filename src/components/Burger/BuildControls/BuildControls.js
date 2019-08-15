@@ -4,33 +4,33 @@ import BuildControl from './BuildControl/BuildControl';
 import classes from './BuildControls.module.css';
 
 const controls = [
-  { label: 'Salad', type: 'salad' },
-  { label: 'Bacon', type: 'bacon' },
-  { label: 'Cheese', type: 'cheese' },
-  { label: 'Meat', type: 'meat' }
+    {label: 'Salad', type: 'salad'},
+    {label: 'Bacon', type: 'bacon'},
+    {label: 'Cheese', type: 'cheese'},
+    {label: 'Meat', type: 'meat'}
 ];
 
 const buildControls = props => (
-  <div className={classes.BuildControls}>
-    <p>Total price:
-      <strong style={{fontFamily: "Quicksand"}}>{props.price.toFixed(2)}</strong>
-    </p>
-    {controls.map(ctrl => (
-      <BuildControl
-        key={ctrl.label}
-        label={ctrl.label}
-        moreIngredient={() => props.moreIngredient(ctrl.type)}
-        lessIngredient={() => props.lessIngredient(ctrl.type)}
-        disabled={props.disabled[ctrl.type]}
-      />
-    ))}
-    <button
-      className={classes.OrderButton}
-      disabled={!props.purchasable}
-      onClick={props.order}>
-      ORDER
-    </button>
-  </div>
+    <div className={classes.BuildControls}>
+        <p>Total price:
+            <strong style={{fontFamily: "Quicksand"}}>{props.price.toFixed(2)}</strong>
+        </p>
+        {controls.map(ctrl => (
+            <BuildControl
+                key={ctrl.label}
+                label={ctrl.label}
+                moreIngredient={() => props.moreIngredient(ctrl.type)}
+                lessIngredient={() => props.lessIngredient(ctrl.type)}
+                disabled={props.disabled[ctrl.type]}
+            />
+        ))}
+        <button
+            className={classes.OrderButton}
+            disabled={!props.purchasable}
+            onClick={props.order}>
+            {props.isAuthenticated ? "ORDER NOW" : "Sign up to Order"}
+        </button>
+    </div>
 );
 
 export default buildControls;
