@@ -18,32 +18,31 @@ class App extends Component {
     render() {
 
         let routes = (
-            <>
-                <Route path={'/'} exact component={BurgerBuilder}/>
-                <Route path={'/auth'} component={Auth}/>
-                <Redirect to={'/'}/>
-            </>
+            <Switch>
+                <Route path='/auth' component={Auth}/>
+                <Route path='/' exact component={BurgerBuilder}/>
+                <Redirect to='/'/>
+            </Switch>
         );
 
         if (this.props.isAuthenticated) {
             routes = (
-                <>
-                    <Route path={'/logout'} component={Logout}/>
-                    <Route path={'/checkout'} component={Checkout}/>
-                    <Route path={'/orders'} component={Orders}/>
-                    <Route path={'/'} exact component={BurgerBuilder}/>
-                    <Redirect to={'/'}/>
-                </>
+                <Switch>
+                    <Route path='/checkout' component={Checkout}/>
+                    <Route path='/auth' component={Auth}/>
+                    <Route path='/logout' component={Logout}/>
+                    <Route path='/orders' component={Orders}/>
+                    <Route path='/' exact component={BurgerBuilder}/>
+                    <Redirect to='/'/>
+                </Switch>
             );
         }
 
         return (
             <div>
                 <Layout>
-                    <Switch>
-                        {routes}
-                        {/*<Route render={() => <h1 style={{color: 'red', textAlign: 'center'}}>Page Not Found</h1>}/>*/}
-                    </Switch>
+                    {routes}
+                    {/*<Route render={() => <h1 style={{color: 'red', textAlign: 'center'}}>Page Not Found</h1>}/>*/}
                 </Layout>
             </div>
         );
