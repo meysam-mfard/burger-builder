@@ -10,7 +10,9 @@ import axios from '../../axios-orders';
 import withErrorHandler from '../../HOC/withErrorHandler';
 import * as actions from '../../store/actions/index';
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
+//export is used to be able to access this component in its test file without redux connect in the way
+
     state = {
         purchasing: false
     };
@@ -72,7 +74,7 @@ class BurgerBuilder extends Component {
             orderSummary = <OrderSummary purchaseCancelled={this.purchaseCancelHandler}
                                          purchaseContinued={this.purchaseContinueHandler}
                                          ingredients={this.props.ingredients}
-                                         price={this.props.totalPrice.toFixed(2)}/>;
+                                         price={this.props.totalPrice}/>;
         }
 
         return (

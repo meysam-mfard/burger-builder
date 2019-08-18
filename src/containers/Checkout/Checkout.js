@@ -12,7 +12,7 @@ class Checkout extends Component {
     };
 
     continueClickHandler = () => {
-        this.props.history.replace(this.props.match.path + '/contact-data');
+        this.props.history.replace('/checkout/contact-data');
     };
 
     render() {
@@ -26,7 +26,7 @@ class Checkout extends Component {
                                      cancelClicked={this.cancelClickHandler}
                                      continueClicked={this.continueClickHandler}/>
                     <Route
-                        path={this.props.match.path + "/contact-data"}
+                        path={'/checkout/contact-data'}
                         component={ContactData}/>
                 </div>
             );

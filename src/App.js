@@ -40,7 +40,7 @@ class App extends Component {
                     />
                     <Route path='/checkout' render={() => (
                         <Suspense fallback={<div>Loading...</div>}>
-                            <Checkout/>
+                            <Checkout {...this.props}/>
                         </Suspense>)}
                     />
                     <Route path='/orders' render={() => (
