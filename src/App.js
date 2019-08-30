@@ -33,21 +33,9 @@ class App extends Component {
         if (this.props.isAuthenticated) {
             routes = (
                 <Switch>
-                    <Route path='/auth' render={() => (
-                        <Suspense fallback={<div>Loading...</div>}>
-                            <Auth/>
-                        </Suspense>)}
-                    />
-                    <Route path='/checkout' render={() => (
-                        <Suspense fallback={<div>Loading...</div>}>
-                            <Checkout {...this.props}/>
-                        </Suspense>)}
-                    />
-                    <Route path='/orders' render={() => (
-                        <Suspense fallback={<div>Loading...</div>}>
-                            <Orders/>
-                        </Suspense>)}
-                    />
+                    <Route path='/auth' render={() => <Auth/>} />
+                    <Route path='/checkout' render={() => <Checkout {...this.props}/>} />
+                    <Route path='/orders' render={() => <Orders/>} />
                     <Route path='/logout' component={Logout}/>
                     <Route path='/' exact component={BurgerBuilder}/>
                     <Redirect to='/'/>
@@ -58,8 +46,9 @@ class App extends Component {
         return (
             <div>
                 <Layout>
-                    {routes}
-                    {/*<Route render={() => <h1 style={{color: 'red', textAlign: 'center'}}>Page Not Found</h1>}/>*/}
+                    <Suspense fallback={<p>Loading...</p>}>
+                        {routes}
+                    </Suspense>
                 </Layout>
             </div>
         );
